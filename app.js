@@ -3,8 +3,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import errorhandler from 'errorhandler';
-// eslint-disable-next-line import/no-cycle
-import routes from './src/routes';
 
 dotenv.config();
 
@@ -23,8 +21,6 @@ app.use(bodyParser.json());
 if (!isProduction) {
   app.use(errorhandler());
 }
-
-app.use(routes);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
