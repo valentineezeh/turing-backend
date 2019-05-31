@@ -38,3 +38,5 @@ process.on('SIGINT', () => {
   sequelize.close(); // This close the connection to the database
   process.exit(0);
 });
+
+export default sequelize;
