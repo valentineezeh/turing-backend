@@ -74,7 +74,7 @@ export default class ProductRepositories {
       }, {
         type: sequelize.QueryTypes.SELECT
       });
-      return response[0];
+      return response;
     } catch (error) {
       return error;
     }
@@ -126,7 +126,7 @@ export default class ProductRepositories {
         },
         type: sequelize.QueryTypes.SELECT
       });
-      return response[0];
+      return response;
     } catch (error) {
       return error;
     }
