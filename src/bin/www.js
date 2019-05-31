@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
+// eslint-disable-next-line import/no-cycle
 import app from '../../app';
 
 dotenv.config();

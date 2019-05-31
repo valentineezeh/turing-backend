@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-cycle
+import isEmpty from 'is-empty';
 import ProductServices from '../services/ProductServices';
 
 /**
@@ -134,7 +135,7 @@ export default class ProductControllers {
     }
 
     const response = await ProductServices.GetProductsByDepartmentId(departmentId, descriptionLength, limit, page);
-    if (response.length !== 0) {
+    if (!isEmpty(response[0])) {
       return res.status(200).json(response);
     }
     return res.status(404).json({
