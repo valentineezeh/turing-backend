@@ -3,6 +3,7 @@ import express from 'express';
 import productRoutes from './apiRoutes/products';
 import attributeRoutes from './apiRoutes/attributes';
 import departmentRoutes from './apiRoutes/departments';
+import taxRoutes from './apiRoutes/tax';
 
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.get('/', (req, res) => {
 router.use('/api', productRoutes);
 router.use('/api', attributeRoutes);
 router.use('/api', departmentRoutes);
+router.use('/api', taxRoutes);
 
 export default router;
