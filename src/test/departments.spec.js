@@ -1,8 +1,10 @@
 import supertest from 'supertest';
 import should from 'should';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
-const app = supertest.agent('http://localhost:3000');
+const app = supertest.agent(process.env.HOSTNAMEURL);
 
 describe('Departments Endpoint /departments', () => {
   it('should get all departments', (done) => {

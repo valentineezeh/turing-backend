@@ -12,7 +12,8 @@ export default class AttributeServices {
      */
   static async GetAttributeList() {
     const getAttributeList = await AttributeRepositories.GetAttributeList();
-    return getAttributeList;
+    const response = Object.values(getAttributeList);
+    return response;
   }
 
   /**

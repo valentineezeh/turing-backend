@@ -11,7 +11,8 @@ export default class DepartmentsService {
      * @returns {Object} returns department list
      */
   static async GetAllDepartments() {
-    const response = await DepartmentRepositories.GetAllDepartments();
+    const departmentList = await DepartmentRepositories.GetAllDepartments();
+    const response = Object.values(departmentList);
     return response;
   }
 

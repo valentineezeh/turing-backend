@@ -8,8 +8,6 @@ const router = express.Router();
 
 router.post('/customers', verifyUserInput.registerCustomerRequestBody, CustomerControllers.CustomerSignUp);
 router.post('/customers/login', verifyUserInput.loginCustomerRequestBody, CustomerControllers.CustomerSignIn);
-
-router.use(verifyToken);
-router.get('/customer', CustomerControllers.GetCustomerById);
+router.get('/customer', verifyToken, CustomerControllers.GetCustomerById);
 
 export default router;
