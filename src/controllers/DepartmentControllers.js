@@ -16,7 +16,7 @@ export default class DepartmentControllers {
   static async GetAllDepartments(req, res) {
     try {
       const response = await DepartmentServices.GetAllDepartments();
-      if (!isEmpty(response[0])) {
+      if (response.length !== 0) {
         return res.status(200).json(response);
       }
       return res.status(500).json({

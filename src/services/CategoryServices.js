@@ -10,7 +10,8 @@ export default class CategoryServices {
      * @returns {Object} returns categories object
      */
   static async GetAllCategories() {
-    const response = await CategoryRepositories.GetAllCategories();
+    const allCategories = await CategoryRepositories.GetAllCategories();
+    const response = Object.values(allCategories);
     return response;
   }
 
@@ -30,7 +31,8 @@ export default class CategoryServices {
      * @returns {Object} returns a single product.
      */
   static async GetProductCategoryById(productId) {
-    const response = await CategoryRepositories.GetProductCategoryById(productId);
+    const categoryInProduct = await CategoryRepositories.GetProductCategoryById(productId);
+    const response = Object.values(categoryInProduct);
     return response;
   }
 
@@ -40,7 +42,8 @@ export default class CategoryServices {
      * @returns {Object} returns an object
      */
   static async GetCategoryByDepartmentId(departmentId) {
-    const response = await CategoryRepositories.GetCategoryByDepartmentId(departmentId);
+    const categoryDepartment = await CategoryRepositories.GetCategoryByDepartmentId(departmentId);
+    const response = Object.values(categoryDepartment);
     return response;
   }
 }

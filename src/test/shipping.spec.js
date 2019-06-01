@@ -6,10 +6,10 @@ dotenv.config();
 
 const app = supertest.agent(process.env.HOSTNAMEURL);
 
-describe('Tax Endpoint /tax', () => {
-  it('should get all tax', (done) => {
+describe('Shipping Endpoint /shippings', () => {
+  it('should get all shipping regions', (done) => {
     app
-      .get('/api/tax')
+      .get('/api/shipping/regions')
       .set('Content-Type', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(200)
@@ -18,28 +18,15 @@ describe('Tax Endpoint /tax', () => {
         done();
       });
   });
-  it('should get a tax detail using the tax id', (done) => {
-    const taxId = 1;
+  it('should get a shipping region using region id', (done) => {
+    const regionId = 1;
     app
-      .get(`/api/tax/${taxId}`)
+      .get(`/api/shipping/regions/${regionId}`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(200)
       .end((err, res) => {
         res.status.should.equal(200);
-        done();
-      });
-  });
-  it('should throw an error when tax id does not exit', (done) => {
-    const taxId = 10000000;
-    app
-      .get(`/api/tax/${taxId}`)
-      .set('Content-Type', 'application/json')
-      .expect('Content-Type', 'application/json; charset=utf-8')
-      .expect(404)
-      .end((err, res) => {
-        res.status.should.equal(404);
-        res.body.error.should.equal('tax resource not found.');
         done();
       });
   });

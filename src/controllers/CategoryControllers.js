@@ -61,11 +61,34 @@ export default class CategoryControllers {
     try {
       const { productId } = req.params;
       const response = await CategoryServices.GetProductCategoryById(productId);
-      if (!isEmpty(response)) {
+      if (response.length !== 0) {
         return res.status(200).json(response);
       }
       return res.status(404).json({
         error: 'Product Category not found.'
+      });
+    } catch (error) {
+      return res.status(500).json({
+        error: 'Internal server error.'
+      });
+    }
+  }
+
+  /**
+   * @description Get a category using product Id
+   * @param {Object} req - Http Request object
+   * @param {Object} res - Http Response object
+   * @returns {Object} returns an object
+   */
+  static async GetCategoryByDepartmentId(req, res) {
+    try {
+      const { departmentId } = req.params;
+      const response = await CategoryServices.GetCategoryByDepartmentId(departmentId);
+      if (response.length !== 0) {
+        return res.status(200).json(response);
+      }
+      return res.status(404).json({
+        error: 'Category not found in department.'
       });
     } catch (error) {
       return res.status(500).json({
