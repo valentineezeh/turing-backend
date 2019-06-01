@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import TaxServices from '../services/TaxServices';
 
 /**
@@ -12,8 +13,14 @@ export default class TaxsController {
      * @returns {Object} returns tax object
      */
   static async GetAllTax(req, res) {
-    const response = await TaxServices.GetAllTax();
-    return res.status(200).json(response);
+    try {
+      const response = await TaxServices.GetAllTax();
+      return res.status(200).json(response);
+    } catch (error) {
+      return res.status(500).json({
+        error: 'Internal server error.'
+      });
+    }
   }
 
   /**
@@ -23,13 +30,19 @@ export default class TaxsController {
      * @returns {Object} returns tax object via taxId
      */
   static async GetTaxById(req, res) {
-    const { taxId } = req.params;
-    const response = await TaxServices.GetTaxById(Number(taxId));
-    if (response.length !== 0) {
-      return res.status(200).json(response);
+    try {
+      const { taxId } = req.params;
+      const response = await TaxServices.GetTaxById(Number(taxId));
+      if (response.length !== 0) {
+        return res.status(200).json(response);
+      }
+      return res.status(404).json({
+        error: 'tax resource not found.'
+      });
+    } catch (error) {
+      return res.status(500).json({
+        error: 'Internal server error.'
+      });
     }
-    return res.status(404).json({
-      error: 'tax resource not found.'
-    });
   }
 }
