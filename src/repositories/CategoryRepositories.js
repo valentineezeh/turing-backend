@@ -53,7 +53,7 @@ export default class CategoryRepositories {
         },
         type: sequelize.QueryTypes.SELECT
       });
-      return response[0]['0'];
+      return response[0];
     } catch (error) {
       throw error;
     }
@@ -72,7 +72,7 @@ export default class CategoryRepositories {
         },
         type: sequelize.QueryTypes.SELECT
       });
-      return response[0]['0'];
+      return response[0];
     } catch (error) {
       throw error;
     }

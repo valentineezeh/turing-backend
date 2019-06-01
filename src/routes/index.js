@@ -6,6 +6,8 @@ import departmentRoutes from './apiRoutes/departments';
 import taxRoutes from './apiRoutes/tax';
 import categoryRoutes from './apiRoutes/categories';
 import customerRoutes from './apiRoutes/customers';
+import shippingRoutes from './apiRoutes/shippings';
+import orderRoutes from './apiRoutes/orders';
 
 const router = express.Router();
 
@@ -21,5 +23,7 @@ router.use('/api', departmentRoutes);
 router.use('/api', taxRoutes);
 router.use('/api', categoryRoutes);
 router.use('/api', customerRoutes);
+router.use('/api', shippingRoutes);
+router.use('/api/orders', orderRoutes);
 
 export default router;

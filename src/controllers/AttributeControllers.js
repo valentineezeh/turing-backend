@@ -16,8 +16,8 @@ export default class AttributeControllers {
   static async GetAttributeList(req, res) {
     try {
       const response = await AttributeServices.GetAttributeList();
-      if (!isEmpty(response[0])) {
-        return res.status(200).json(response[0]);
+      if (response.length !== 0) {
+        return res.status(200).json(response);
       }
       return res.status(500).json({
         message: 'Ooops Something went wrong, Please try again.',
@@ -85,7 +85,7 @@ export default class AttributeControllers {
     try {
       const { productId } = req.params;
       const response = await AttributeServices.GetAttributesByProductId(Number(productId));
-      if (response.length > 0) {
+      if (response.length !== 0) {
         return res.status(200).json(response);
       }
       return res.status(404).json({
