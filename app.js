@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import errorhandler from 'errorhandler';
+import expressValidator from 'express-validator';
 // eslint-disable-next-line import/no-cycle
 import routes from './src/routes';
 
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 // Normal express config defaults
 app.use(require('morgan')('dev'));
 
+app.use(expressValidator());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
