@@ -22,7 +22,9 @@ const helper = {
     return jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: expiry
     });
-  }
+  },
+  // generate uniqueID
+  generateUniqueId: () => process.env.UNIQUE_ID
 };
 
 export default helper;

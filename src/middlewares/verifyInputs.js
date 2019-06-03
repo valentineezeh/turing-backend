@@ -25,6 +25,25 @@ const verifyUserInput = {
     req.check('tax_id', 'tax_id must be numeric').trim().isNumeric();
     handleValidations(req, res, next);
   },
+  validateProductRequestBody: (req, res, next) => {
+    req.check('cart_id', 'cart_id is required').trim().notEmpty();
+    req.check('product_id', 'product_id must be numeric').trim().isNumeric();
+    req.check('attributes', 'attributes is required').trim().notEmpty();
+    handleValidations(req, res, next);
+  },
+  validateUpdateCartByItem: (req, res, next) => {
+    req.check('item_id', 'item_id is required').trim().isNumeric();
+    req.check('quantity', 'quantity is required').trim().isNumeric();
+    handleValidations(req, res, next);
+  },
+  getCartId: (req, res, next) => {
+    req.check('cart_id', 'cart_id is required').trim().notEmpty();
+    handleValidations(req, res, next);
+  },
+  getItemId: (req, res, next) => {
+    req.check('item_id', 'item_id is required').trim().isNumeric();
+    handleValidations(req, res, next);
+  },
 };
 
 export default verifyUserInput;
