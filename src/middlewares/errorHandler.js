@@ -1,4 +1,4 @@
-const errorValidationHandler = (req, res, next) => {
+const handleValidations = (req, res, next) => {
   const error = req.validationErrors();
   const validationErrors = [];
   if (error) {
@@ -10,5 +10,5 @@ const errorValidationHandler = (req, res, next) => {
   next();
 };
 
-export default errorValidationHandler;
+export default handleValidations;
 

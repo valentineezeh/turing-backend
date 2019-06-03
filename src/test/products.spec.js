@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const app = supertest.agent(process.env.HOSTNAMEURL);
+const app = supertest.agent(process.env.HOSTNAMEURL); 
 
 describe('Products Endpoint /products', () => {
   it('should get all products', (done) => {

@@ -1,11 +1,13 @@
+import express from 'express';
+import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import express from 'express';
 import errorhandler from 'errorhandler';
 import expressValidator from 'express-validator';
+import helmet from 'helmet';
 // eslint-disable-next-line import/no-cycle
-import routes from './src/routes';
+import routes from './routes';
 
 dotenv.config();
 
@@ -26,8 +28,8 @@ app.use((req, res, next) => {
 });
 
 // Normal express config defaults
-app.use(require('morgan')('dev'));
-
+app.use(logger('dev'));
+app.use(helmet());
 app.use(expressValidator());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
