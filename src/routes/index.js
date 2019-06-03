@@ -8,6 +8,7 @@ import categoryRoutes from './apiRoutes/categories';
 import customerRoutes from './apiRoutes/customers';
 import shippingRoutes from './apiRoutes/shippings';
 import orderRoutes from './apiRoutes/orders';
+import shoppingCartRoutes from './apiRoutes/shoppingCart';
 
 const router = express.Router();
 
@@ -25,5 +26,6 @@ router.use('/api', categoryRoutes);
 router.use('/api', customerRoutes);
 router.use('/api', shippingRoutes);
 router.use('/api/orders', orderRoutes);
+router.use('/api', shoppingCartRoutes);
 
 export default router;
