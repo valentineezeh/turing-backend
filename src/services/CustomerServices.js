@@ -46,6 +46,7 @@ export default class CustomerServices {
   static async CustomerSignIn(email, password) {
     try {
       const res = await CustomerRepositories.CustomerSignIn(email);
+      console.log('>>>>>: ', password, res.password);
       const match = await helper.comparePassword(password, res.password);
       const response = {
         match,
@@ -68,12 +69,12 @@ export default class CustomerServices {
   }
 
   /**
-     * @description register a customer
-     * @param {Object} customerBody - customer to be created
-     * @param {Number} customerId - customer to be created
-     * @returns {Object} returns a newly created customer ID from the repository
+     * @description this update a customer details
+     * @param {Object} customerObject - customer details to be updated
+     * @param {Number} customerId - customer Id
+     * @returns {Object} returns a newly updated customer details
      */
-  static async UpdateCustomerDetails(customerBody) {
+  static async UpdateCustomerDetails(customerObject) {
     try {
       const {
         address_1, address_2,
@@ -83,7 +84,7 @@ export default class CustomerServices {
         postal_code,
         customerId,
         shipping_region_id
-      } = customerBody;
+      } = customerObject;
       await CustomerRepositories.UpdateCustomerDetails({
         customerId,
         address_1,
@@ -100,12 +101,12 @@ export default class CustomerServices {
   }
 
   /**
-     * @description register a customer
-     * @param {Object} customerBody - customer to be created
-     * @param {Number} customerId - customer to be created
-     * @returns {Object} returns a newly created customer ID from the repository
+     * @description update a customer account details
+     * @param {Object} customerObject - customer object to be updated
+     * @param {Number} customerId - customer id gotting from token
+     * @returns {Object} returns a newly updated customer account details
      */
-  static async UpdateCustomerAccountDetails(customerBody) {
+  static async UpdateCustomerAccountDetails(customerObject) {
     try {
       const {
         name, email,
@@ -114,12 +115,12 @@ export default class CustomerServices {
         eve_phone,
         mob_phone,
         customerId,
-      } = customerBody;
+      } = customerObject;
       await CustomerRepositories.UpdateCustomerAccountDetails({
         customerId,
         name,
         email,
-        password,
+        password: await helper.hashPassword(password),
         day_phone,
         eve_phone,
         mob_phone,
