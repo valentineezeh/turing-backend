@@ -13,6 +13,29 @@ const verifyUserInput = {
     req.check('password', 'password is required').trim().notEmpty();
     handleValidations(req, res, next);
   },
+  updateCustomerRequestBody: (req, res, next) => {
+    req.check('address_1', 'this field is required').trim().notEmpty();
+    req.check('city', 'this field is required').trim().notEmpty();
+    req.check('region', 'this field is required').trim().notEmpty();
+    req.check('country', 'this field is required').trim().notEmpty();
+    req.check('postal_code', 'this field is required').trim().notEmpty();
+    req.check('shipping_region_id', 'this field is required').trim().notEmpty();
+    handleValidations(req, res, next);
+  },
+  updateCustomerAccountDetailsRequestBody: (req, res, next) => {
+    req.check('name', 'this field is required').trim().notEmpty();
+    req.check('email', 'this field is required').trim().notEmpty();
+    req.check('email', 'invalid email type').isEmail();
+    req.check('password', 'this field is required').trim().notEmpty();
+    req.check('day_phone', 'this field is required').trim().notEmpty();
+    req.check('eve_phone', 'this field is required').trim().notEmpty();
+    req.check('mob_phone', 'this field is required').trim().notEmpty();
+    handleValidations(req, res, next);
+  },
+  updateCustomerCardDetailsRequestBody: (req, res, next) => {
+    req.check('credit_card', 'this field is required').trim().notEmpty();
+    handleValidations(req, res, next);
+  },
   productReviewRequestBody: (req, res, next) => {
     req.check('review', 'review is required').trim().notEmpty();
     req.check('rating', 'rating is required').trim().notEmpty();

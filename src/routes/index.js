@@ -9,6 +9,7 @@ import customerRoutes from './apiRoutes/customers';
 import shippingRoutes from './apiRoutes/shippings';
 import orderRoutes from './apiRoutes/orders';
 import shoppingCartRoutes from './apiRoutes/shoppingCart';
+import stripeRoutes from './apiRoutes/stripes';
 
 const router = express.Router();
 
@@ -27,5 +28,6 @@ router.use('/api', customerRoutes);
 router.use('/api', shippingRoutes);
 router.use('/api/orders', orderRoutes);
 router.use('/api', shoppingCartRoutes);
+router.use('/api', stripeRoutes);
 
 export default router;

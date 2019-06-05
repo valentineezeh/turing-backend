@@ -1,5 +1,7 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/no-cycle */
 import dotenv from 'dotenv';
+import isEmpty from 'is-empty';
 import CustomerServices from '../services/CustomerServices';
 import helper from '../utils/helper';
 
@@ -63,26 +65,38 @@ export default class CustomerControllers {
    * @returns {Object} customer with a token
    */
   static async CustomerSignIn(req, res) {
-    const { email, password } = req.body;
-    const response = await CustomerServices.CustomerSignIn(email, password);
-    if (response.match) {
-      const customer = await CustomerServices.GetCustomerById(response.id);
-      const payload = {
-        email: customer.email,
-        name: customer.name,
-        id: customer.customer_id
-      };
-      return res.status(200).json({
-        customer: {
-          schema: customer
-        },
-        accessToken: `Bearer ${helper.generateToken('UserLogin', payload)}`,
-        expires_in: process.env.TOKEN_EXPIRES_IN
+    try {
+      const { email, password } = req.body;
+      const checkUser = await CustomerServices.ExistingCustomer(email);
+      if (checkUser) {
+        const response = await CustomerServices.CustomerSignIn(email, password);
+        if (response.match) {
+          const customer = await CustomerServices.GetCustomerById(response.id);
+          const payload = {
+            email: customer.email,
+            name: customer.name,
+            id: customer.customer_id
+          };
+          return res.status(200).json({
+            customer: {
+              schema: customer
+            },
+            accessToken: `Bearer ${helper.generateToken('UserLogin', payload)}`,
+            expires_in: process.env.TOKEN_EXPIRES_IN
+          });
+        }
+        return res.status(401).json({
+          message: 'Invalid Credentials, please try.'
+        });
+      }
+      return res.status(404).json({
+        error: 'User does not exist.'
+      })
+    } catch (error) {
+      return res.status(500).json({
+        error: 'Internal server error.'
       });
     }
-    return res.status(401).json({
-      message: 'Invalid Credentials, please try.'
-    });
   }
 
   /**
@@ -95,7 +109,7 @@ export default class CustomerControllers {
     try {
       const userDatails = req.userData;
       const response = await CustomerServices.GetCustomerById(userDatails.id);
-      if (!response) {
+      if (isEmpty(response)) {
         return res.status(404).json({
           message: 'User does not exist',
         });
@@ -107,7 +121,119 @@ export default class CustomerControllers {
       });
     } catch (error) {
       return res.status(401).json({
-        message: error.message
+        message: 'Internal server error'
+      });
+    }
+  }
+
+  /**
+   * @description Update a customer and return the customer updated details
+   * @param {Object} req - Http Request object
+   * @param {Object} res - Http Response object
+   * @returns {Object} updated customer details
+   */
+  static async UpdateCustomerDetails(req, res) {
+    try {
+      const { id } = req.userData;
+      const {
+        address_1, address_2, city, region, country,
+        postal_code, shipping_region_id
+      } = req.body;
+      const customerObject = {
+        customerId: id,
+        address_1,
+        address_2,
+        city,
+        region,
+        country,
+        postal_code,
+        shipping_region_id
+      };
+      await CustomerServices.UpdateCustomerDetails(customerObject);
+      const response = await CustomerServices.GetCustomerById(id);
+      return res.status(200).json(
+        {
+          customer: {
+            schema: response
+          }
+        }
+      );
+    } catch (error) {
+      return res.status(500).json({
+        error: 'Internal server error'
+      });
+    }
+  }
+
+  /**
+   * @description update a customer account details and return an updated customer details
+   * @param {Object} req - Http Request object
+   * @param {Object} res - Http Response object
+   * @returns {Object} updated customer details
+   */
+  static async UpdateCustomerAccountDetails(req, res) {
+    try {
+      const { id } = req.userData;
+      const {
+        name, email,
+        password,
+        day_phone,
+        eve_phone,
+        mob_phone,
+      } = req.body;
+      const customerObject = {
+        customerId: id,
+        name,
+        email,
+        password,
+        day_phone,
+        eve_phone,
+        mob_phone,
+      };
+      await CustomerServices.UpdateCustomerAccountDetails(customerObject);
+      const response = await CustomerServices.GetCustomerById(id);
+      return res.status(200).json(
+        {
+          customer: {
+            schema: response
+          }
+        }
+      );
+    } catch (error) {
+      return res.status(500).json({
+        error: 'Internal server error'
+      });
+    }
+  }
+
+  /**
+   * @description this update the customer credit card details
+   * @param {Object} req - Http Request object
+   * @param {Object} res - Http Response object
+   * @returns {Object} returns an updated credit card details
+   */
+  static async UpdateCustomerCreditCardDetails(req, res) {
+    try {
+      const { id } = req.userData;
+      const {
+        credit_card
+      } = req.body;
+      const customerObject = {
+        customerId: id,
+        credit_card
+      };
+      await CustomerServices.UpdateCustomerCreditCardDetails(customerObject);
+      const response = await CustomerServices.GetCustomerById(id);
+      return res.status(200).json(
+        {
+          customer: {
+            schema: response
+          }
+        }
+      );
+    } catch (error) {
+      return res.status(500).json({
+        error: error.message
       });
     }
   }
