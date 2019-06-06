@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
 import supertest from 'supertest';
 import should from 'should';
 import dotenv from 'dotenv';
@@ -31,15 +33,15 @@ describe('Products Endpoint /products', () => {
       });
   });
   it('should throw an error when product id does not exit', (done) => {
-    const productId = 10000000;
+    const product_id = 10000000;
     app
-      .get(`/api/products/${productId}`)
+      .get(`/api/products/${product_id}`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Product requested does not exist.');
+        res.body.error.message.should.equal('Product requested does not exist.');
         done();
       });
   });
@@ -62,7 +64,7 @@ describe('Products Endpoint /products', () => {
       .expect(400)
       .end((err, res) => {
         res.status.should.equal(400);
-        res.body.error.should.equal('This field can either be On, Off or empty');
+        res.body.error.message.should.equal('This field can either be On, Off or empty');
         done();
       });
   });
@@ -75,7 +77,7 @@ describe('Products Endpoint /products', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Product requested does not exist.');
+        res.body.error.message.should.equal('Product requested does not exist.');
         done();
       });
   });
@@ -100,7 +102,7 @@ describe('Products Endpoint /products', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Product requested does not exist.');
+        res.body.error.message.should.equal('Product requested does not exist.');
         done();
       });
   });
@@ -125,7 +127,7 @@ describe('Products Endpoint /products', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Product requested does not exist.');
+        res.body.error.message.should.equal('Product requested does not exist.');
         done();
       });
   });
@@ -150,7 +152,7 @@ describe('Products Endpoint /products', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Product requested does not exist.');
+        res.body.error.message.should.equal('Product requested does not exist.');
         done();
       });
   });
@@ -175,7 +177,7 @@ describe('Products Endpoint /products', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Product requested does not exist.');
+        res.body.error.message.should.equal('Product requested does not exist.');
         done();
       });
   });
@@ -200,7 +202,7 @@ describe('Products Endpoint /products', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('This product is yet to have any review.');
+        res.body.error.message.should.equal('This product is yet to have any review.');
         done();
       });
   });

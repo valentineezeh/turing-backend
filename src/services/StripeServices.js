@@ -30,7 +30,7 @@ export default class StripeServices {
       } = option;
       const response = await stripe.charges.create({
         token, orderId, description, amount, currency, customer
-      }); 
+      });
       return response;
     } catch (error) {
       return error;

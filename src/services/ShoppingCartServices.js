@@ -34,12 +34,12 @@ export default class ShoppingCartServices {
      * @returns {Object} returns all products in cart
      */
   static async UpdateCartByItemDetails(item) {
-    const response = await ShoppingCartRepositories.UpdateCartByItemDetails(item);
-    let products = [];
-    if (response.length !== 0) {
-      products = await ShoppingCartRepositories.GetAllProductsInCart(response[0].cart_id);
+    const updateProduct = await ShoppingCartRepositories.UpdateCartByItemDetails(item);
+    if (updateProduct.length !== 0) {
+      const products = await ShoppingCartRepositories.GetAllProductsInCart(updateProduct[0].cart_id);
+      const response = Object.values(products[0]);
+      return response;
     }
-    return products;
   }
 
   /**

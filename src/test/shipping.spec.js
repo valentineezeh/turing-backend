@@ -19,7 +19,7 @@ describe('Shipping Endpoint /shippings', () => {
       });
   });
   it('should get a shipping region using region id', (done) => {
-    const regionId = 1;
+    const regionId = 2;
     app
       .get(`/api/shipping/regions/${regionId}`)
       .set('Content-Type', 'application/json')
@@ -27,6 +27,19 @@ describe('Shipping Endpoint /shippings', () => {
       .expect(200)
       .end((err, res) => {
         res.status.should.equal(200);
+        done();
+      });
+  });
+  it('should throw an error when regionId is not found', (done) => {
+    const regionId = 1;
+    app
+      .get(`/api/shipping/regions/${regionId}`)
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect(404)
+      .end((err, res) => {
+        res.status.should.equal(404);
+        res.body.error.message.should.equal('Shipping region not found.');
         done();
       });
   });

@@ -61,12 +61,50 @@ const verifyUserInput = {
   },
   getCartId: (req, res, next) => {
     req.check('cart_id', 'cart_id is required').trim().notEmpty();
+    req.check('cart_id', 'cart_id must be a number.').trim().isNumeric();
     handleValidations(req, res, next);
   },
   getItemId: (req, res, next) => {
-    req.check('item_id', 'item_id is required').trim().isNumeric();
+    req.check('item_id', 'item_id must be a number').trim().isNumeric();
+    req.check('item_id', 'item_id is required.').trim().notEmpty();
     handleValidations(req, res, next);
   },
+  getAttributeId: (req, res, next) => {
+    req.check('attribute_id', 'attribute Id must be a number').trim().isNumeric();
+    req.check('attribute_id', 'attribute Id is required').trim().notEmpty();
+    handleValidations(req, res, next);
+  },
+  getProductId: (req, res, next) => {
+    req.check('product_id', 'product id must be a number').trim().isNumeric();
+    req.check('product_id', 'product Id is required').trim().notEmpty();
+    handleValidations(req, res, next);
+  },
+  getCategoryId: (req, res, next) => {
+    req.check('category_id', 'category id must be a number').trim().isNumeric();
+    req.check('category_id', 'category Id is required').trim().notEmpty();
+    handleValidations(req, res, next);
+  },
+  getDepartmentId: (req, res, next) => {
+    req.check('department_id', 'department id must be a number').trim().isNumeric();
+    req.check('department_id', 'department Id is required').trim().notEmpty();
+    handleValidations(req, res, next);
+  },
+  getOrderId: (req, res, next) => {
+    req.check('order_id', 'order id must be a number').trim().isNumeric();
+    req.check('order_id', 'order Id is required').trim().notEmpty();
+    handleValidations(req, res, next);
+  },
+  getShippingRegionId: (req, res, next) => {
+    req.check('shipping_region_id', 'shipping_region_id must be a number').trim().isNumeric();
+    req.check('shipping_region_id', 'shipping_region_id is required').trim().notEmpty();
+    handleValidations(req, res, next);
+  },
+  stripeRequestBody: (req, res, next) => {
+    req.check('token', 'this field is required').trim().notEmpty();
+    req.check('order_id', 'order id is required').trim().notEmpty();
+    req.check('amount', 'amount is required').trim().notEmpty();
+    handleValidations(req, res, next);
+  }
 };
 
 export default verifyUserInput;

@@ -46,7 +46,6 @@ export default class CustomerServices {
   static async CustomerSignIn(email, password) {
     try {
       const res = await CustomerRepositories.CustomerSignIn(email);
-      console.log('>>>>>: ', password, res.password);
       const match = await helper.comparePassword(password, res.password);
       const response = {
         match,

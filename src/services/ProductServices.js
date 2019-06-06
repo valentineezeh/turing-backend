@@ -16,6 +16,10 @@ export default class ProductServices {
      */
   static async GetAllProducts(descriptionLength, limit, page) {
     const response = await ProductRepositories.GetAllProducts(descriptionLength, limit, page);
+    // const obj1 = Object.values(allProducts[0]);
+    // const obj2 = Object.values(allProducts[1]);
+    // const products = { ...obj1, obj2 };
+    // const response = products;
     return response;
   }
 

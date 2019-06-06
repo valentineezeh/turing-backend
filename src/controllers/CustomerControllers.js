@@ -28,7 +28,13 @@ export default class CustomerControllers {
       };
       const customer = await CustomerServices.ExistingCustomer(customerBody.email);
       if (customer) {
-        return res.status(409).json({ error: 'user already exist' });
+        return res.status(409).json({
+          error: {
+            code: 'USR_04',
+            message: 'The email already exists.',
+            field: 'email'
+          }
+        });
       }
       const customerId = await CustomerServices.CustomerSignUp(customerBody);
       if (customerId !== null || customerId !== undefined) {
@@ -49,11 +55,15 @@ export default class CustomerControllers {
         );
       }
       return res.status(400).json({
-        error: 'Oops! something went wrong please try again.'
+        error: {
+          message: 'Oops! something went wrong please try again.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: error.message
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -85,16 +95,27 @@ export default class CustomerControllers {
             expires_in: process.env.TOKEN_EXPIRES_IN
           });
         }
-        return res.status(401).json({
-          message: 'Invalid Credentials, please try.'
+        return res.status(400).json({
+          error: {
+            code: 'USR_01',
+            message: 'Email or Password is invalid.',
+            status: 400
+          }
         });
       }
       return res.status(404).json({
-        error: 'User does not exist.'
-      })
+        error: {
+          code: 'USR_05',
+          message: 'The email does not exist.',
+          status: 404
+        }
+      });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.',
+          status: 500
+        }
       });
     }
   }
@@ -111,7 +132,11 @@ export default class CustomerControllers {
       const response = await CustomerServices.GetCustomerById(userDatails.id);
       if (isEmpty(response)) {
         return res.status(404).json({
-          message: 'User does not exist',
+          error: {
+            code: 'USR_05',
+            message: 'User does not exist',
+            status: 404
+          }
         });
       }
       return res.status(200).json({
@@ -120,8 +145,11 @@ export default class CustomerControllers {
         },
       });
     } catch (error) {
-      return res.status(401).json({
-        message: 'Internal server error'
+      return res.status(500).json({
+        error: {
+          message: 'Internal server error',
+          status: 500
+        }
       });
     }
   }
@@ -160,7 +188,10 @@ export default class CustomerControllers {
       );
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error'
+        error: {
+          message: 'Internal server error',
+          status: 500
+        }
       });
     }
   }
@@ -201,7 +232,10 @@ export default class CustomerControllers {
       );
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error'
+        error: {
+          message: 'Internal server error',
+          status: 500
+        }
       });
     }
   }
@@ -233,7 +267,10 @@ export default class CustomerControllers {
       );
     } catch (error) {
       return res.status(500).json({
-        error: error.message
+        error: {
+          message: 'Internal server error.',
+          status: 500
+        }
       });
     }
   }

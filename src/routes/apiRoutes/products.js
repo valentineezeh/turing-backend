@@ -1,17 +1,19 @@
 import express from 'express';
 // eslint-disable-next-line import/no-cycle
 import ProductControllers from '../../controllers/ProductControllers';
+import verifyToken from '../../middlewares/verifyToken';
+import verifyUserInput from '../../middlewares/verifyInputs';
 
 const router = express.Router();
 
 router.get('/products', ProductControllers.GetAllProducts);
 router.get('/products/search/', ProductControllers.ProductSearch);
-router.get('/products/:productId/', ProductControllers.GetProductById);
-router.get('/products/inCategory/:categoryId', ProductControllers.GetProductByCategoryId);
-router.get('/products/inDepartment/:departmentId', ProductControllers.GetProductsByDepartmentId);
-router.get('/products/:productId/details', ProductControllers.GetProductDetailsByProductId);
-router.get('/products/:productId/reviews', ProductControllers.GetProductReviewByProductId);
-router.get('/products/:productId/locations', ProductControllers.GetProductLocationByProductId);
-router.post('/products/:productId/reviews', ProductControllers.PostProductReviews);
+router.get('/products/:product_id/', verifyUserInput.getProductId, ProductControllers.GetProductById);
+router.get('/products/inCategory/:category_id', verifyUserInput.getCategoryId, ProductControllers.GetProductByCategoryId);
+router.get('/products/inDepartment/:department_id', verifyUserInput.getDepartmentId, ProductControllers.GetProductsByDepartmentId);
+router.get('/products/:product_id/details', verifyUserInput.getProductId, ProductControllers.GetProductDetailsByProductId);
+router.get('/products/:product_id/reviews', verifyUserInput.getProductId, ProductControllers.GetProductReviewByProductId);
+router.get('/products/:product_id/locations', verifyUserInput.getProductId, ProductControllers.GetProductLocationByProductId);
+router.post('/products/:product_id/reviews', verifyToken, verifyUserInput.getProductId, ProductControllers.PostProductReviews);
 
 export default router;

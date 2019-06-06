@@ -11,7 +11,8 @@ export default class TaxsServices {
      * @returns {Object} returns all tax object
      */
   static async GetAllTax() {
-    const response = await TaxsRepositories.GetAllTax();
+    const allTax = await TaxsRepositories.GetAllTax();
+    const response = Object.values(allTax);
     return response;
   }
 
@@ -22,6 +23,6 @@ export default class TaxsServices {
      */
   static async GetTaxById(taxId) {
     const response = await TaxsRepositories.GetTaxById(taxId);
-    return response;
+    return response[0];
   }
 }

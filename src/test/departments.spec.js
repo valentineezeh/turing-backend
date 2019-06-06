@@ -39,7 +39,7 @@ describe('Departments Endpoint /departments', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Department not found.');
+        res.body.error.message.should.equal('Department not found.');
         done();
       });
   });

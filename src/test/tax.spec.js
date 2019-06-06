@@ -39,7 +39,7 @@ describe('Tax Endpoint /tax', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('tax resource not found.');
+        res.body.error.message.should.equal('tax resource not found.');
         done();
       });
   });
