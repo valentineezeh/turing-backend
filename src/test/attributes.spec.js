@@ -40,7 +40,7 @@ describe('Attributes Endpoint /attributes', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Attribute resource not found');
+        res.body.error.message.should.equal('Attribute resource not found');
         done();
       });
   });
@@ -65,7 +65,7 @@ describe('Attributes Endpoint /attributes', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Attribute Values resource not found');
+        res.body.error.message.should.equal('Attribute Values resource not found');
         done();
       });
   });
@@ -90,7 +90,7 @@ describe('Attributes Endpoint /attributes', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Product attribute resource not found');
+        res.body.error.message.should.equal('Product attribute resource not found');
         done();
       });
   });

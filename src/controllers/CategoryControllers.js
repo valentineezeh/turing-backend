@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable import/no-cycle */
 import isEmpty from 'is-empty';
 import CategoryServices from '../services/CategoryServices';
 
@@ -19,11 +21,16 @@ export default class CategoryControllers {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Categories not found.'
+        error: {
+          code: 'CAT_01',
+          message: 'Categories not found.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -36,17 +43,22 @@ export default class CategoryControllers {
    */
   static async GetACategoryById(req, res) {
     try {
-      const { categoryId } = req.params;
-      const response = await CategoryServices.GetACategoryById(categoryId);
+      const { category_id } = req.params;
+      const response = await CategoryServices.GetACategoryById(category_id);
       if (!isEmpty(response)) {
-        return res.status(200).json({ category_id: categoryId, ...response });
+        return res.status(200).json({ category_id, ...response });
       }
       return res.status(404).json({
-        error: 'Categories not found.'
+        error: {
+          code: 'CAT_01',
+          message: 'Categories not found.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -59,13 +71,16 @@ export default class CategoryControllers {
    */
   static async GetProductCategoryById(req, res) {
     try {
-      const { productId } = req.params;
-      const response = await CategoryServices.GetProductCategoryById(productId);
+      const { product_id } = req.params;
+      const response = await CategoryServices.GetProductCategoryById(product_id);
       if (response.length !== 0) {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Product Category not found.'
+        error: {
+          code: 'CAT_01',
+          message: 'Product Category not found.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
@@ -82,17 +97,22 @@ export default class CategoryControllers {
    */
   static async GetCategoryByDepartmentId(req, res) {
     try {
-      const { departmentId } = req.params;
-      const response = await CategoryServices.GetCategoryByDepartmentId(departmentId);
+      const { department_id } = req.params;
+      const response = await CategoryServices.GetCategoryByDepartmentId(department_id);
       if (response.length !== 0) {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Category not found in department.'
+        error: {
+          code: 'CAT_01',
+          message: 'Category not found in department.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }

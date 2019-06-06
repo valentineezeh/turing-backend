@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import ShippingServices from '../services/ShippingServices';
 
 /**
@@ -17,7 +18,9 @@ export default class ShippingControllers {
       return res.status(200).json(response);
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -32,15 +35,20 @@ export default class ShippingControllers {
     try {
       const regionId = req.params.shipping_region_id;
       const response = await ShippingServices.GetShippingsByRegionId(regionId);
-      if (response !== 0) {
+      if (response.length !== 0) {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Shipping region not found.'
+        error: {
+          code: 'SHP_02',
+          message: 'Shipping region not found.'
+        }
       })
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }

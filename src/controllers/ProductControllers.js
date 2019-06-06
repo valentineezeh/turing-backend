@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/no-cycle */
 import isEmpty from 'is-empty';
 import ProductServices from '../services/ProductServices';
@@ -29,7 +30,9 @@ export default class ProductControllers {
       return res.status(200).json(response);
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -56,7 +59,10 @@ export default class ProductControllers {
 
       if (inAllWords.toLowerCase().trim() !== 'on' && inAllWords.toLowerCase().trim() !== 'off' && inAllWords.toLowerCase().trim() !== '') {
         return res.status(400).json({
-          error: 'This field can either be On, Off or empty'
+          error: {
+            code: 'PRO_01',
+            message: 'This field can either be On, Off or empty'
+          }
         });
       }
       if (page === undefined || limit === undefined || descriptionLength === undefined) {
@@ -71,11 +77,16 @@ export default class ProductControllers {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Product requested does not exist.'
+        error: {
+          code: 'PRO_02',
+          message: 'Product requested does not exist.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -88,17 +99,22 @@ export default class ProductControllers {
      */
   static async GetProductById(req, res) {
     try {
-      const { productId } = req.params;
-      const response = await ProductServices.GetProductById(Number(productId));
+      const { product_id } = req.params;
+      const response = await ProductServices.GetProductById(Number(product_id));
       if (response.length !== 0) {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Product requested does not exist.'
+        error: {
+          code: 'PRO_02',
+          message: 'Product requested does not exist.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -111,7 +127,7 @@ export default class ProductControllers {
      */
   static async GetProductByCategoryId(req, res) {
     try {
-      const { categoryId } = req.params;
+      const { category_id } = req.params;
       const {
         limit,
         descriptionLength
@@ -124,12 +140,15 @@ export default class ProductControllers {
       if (page === undefined) {
         page = 1;
       }
-      const response = await ProductServices.GetProductByCategoryId(Number(categoryId), Number(page), Number(limit), Number(descriptionLength));
+      const response = await ProductServices.GetProductByCategoryId(Number(category_id), Number(page), Number(limit), Number(descriptionLength));
       if (response.length !== 0) {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Product requested does not exist.'
+        error: {
+          code: 'PRO_02',
+          message: 'Product requested does not exist.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
@@ -151,7 +170,7 @@ export default class ProductControllers {
         descriptionLength
       } = req.query;
 
-      const { departmentId } = req.params;
+      const { department_id } = req.params;
 
       let { page } = req.query;
 
@@ -159,16 +178,21 @@ export default class ProductControllers {
         page = 1;
       }
 
-      const response = await ProductServices.GetProductsByDepartmentId(departmentId, descriptionLength, limit, page);
+      const response = await ProductServices.GetProductsByDepartmentId(department_id, descriptionLength, limit, page);
       if (!isEmpty(response[0])) {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Product requested does not exist.'
+        error: {
+          code: 'PRO_02',
+          message: 'Product requested does not exist.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -181,17 +205,22 @@ export default class ProductControllers {
      */
   static async GetProductDetailsByProductId(req, res) {
     try {
-      const { productId } = req.params;
-      const response = await ProductServices.GetProductDetailsByProductId(Number(productId));
+      const { product_id } = req.params;
+      const response = await ProductServices.GetProductDetailsByProductId(Number(product_id));
       if (response.length !== 0) {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Product requested does not exist.'
+        error: {
+          code: 'PRO_02',
+          message: 'Product requested does not exist.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -204,17 +233,22 @@ export default class ProductControllers {
      */
   static async GetProductLocationByProductId(req, res) {
     try {
-      const { productId } = req.params;
-      const response = await ProductServices.GetProductLocationByProductId(Number(productId));
+      const { product_id } = req.params;
+      const response = await ProductServices.GetProductLocationByProductId(Number(product_id));
       if (response.length !== 0) {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Product requested does not exist.'
+        error: {
+          code: 'PRO_02',
+          message: 'Product requested does not exist.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -227,17 +261,22 @@ export default class ProductControllers {
      */
   static async GetProductReviewByProductId(req, res) {
     try {
-      const { productId } = req.params;
-      const response = await ProductServices.GetProductReviewByProductId(Number(productId));
+      const { product_id } = req.params;
+      const response = await ProductServices.GetProductReviewByProductId(Number(product_id));
       if (response.length !== 0) {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'This product is yet to have any review.'
+        error: {
+          code: 'PRO_02',
+          message: 'This product is yet to have any review.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -254,26 +293,30 @@ export default class ProductControllers {
         review,
         rating
       } = req.body;
-      const { productId } = req.params;
+      const { product_id } = req.params;
       const customerId = req.userData.id;
       const reviewObject = {
         review: String(review),
         rating: Number(rating),
-        productId: Number(productId),
+        productId: Number(product_id),
         customerId: Number(customerId)
       };
       if (reviewObject.rating < 1 || reviewObject.rating > 5) {
         return res.status(400).json({
-          error: 'rating must be between 1 and 5'
+          error: {
+            code: 'PRO_01',
+            message: 'rating must be between 1 and 5'
+          }
         });
       }
       await ProductServices.PostProductReviews(reviewObject.productId, reviewObject.customerId, reviewObject.review, reviewObject.rating);
-  
-      const response = await ProductServices.GetProductReviewByProductId(productId);
+      const response = await ProductServices.GetProductReviewByProductId(product_id);
       return res.status(201).json(response);
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }

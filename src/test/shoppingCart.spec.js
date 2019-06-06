@@ -58,7 +58,7 @@ describe('Shopping Cart Endpoint /shoppingcart', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Cart is empty.');
+        res.body.error.message.should.equal('Cart is empty.');
         done();
       });
   });
@@ -79,7 +79,7 @@ describe('Shopping Cart Endpoint /shoppingcart', () => {
       });
   });
   it('should throw an error when no product is found in the cart', (done) => {
-    const item_id = '1000000';
+    const item_id = 1000000;
     const quantityObj = {
       quantity: '20'
     };
@@ -91,7 +91,7 @@ describe('Shopping Cart Endpoint /shoppingcart', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Product not found in cart.');
+        res.body.error.message.should.equal('Product not found in cart.');
         done();
       });
   });
@@ -104,7 +104,7 @@ describe('Shopping Cart Endpoint /shoppingcart', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('No product found in cart.');
+        res.body.error.message.should.equal('No product found in cart.');
         done();
       });
   });
@@ -141,7 +141,7 @@ describe('Shopping Cart Endpoint /shoppingcart', () => {
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Cart is empty.');
+        res.body.error.message.should.equal('Cart is empty.');
         done();
       });
   });

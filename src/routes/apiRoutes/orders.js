@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post('/', verifyToken, verifyUserInput.createOrderRequestBody, OrderControllers.CreateOrder);
 router.get('/inCustomer/', verifyToken, OrderControllers.GetOrdersByCustomerId);
-router.get('/:order_id', verifyToken, OrderControllers.GetOrderDetails);
-router.get('/shortDetail/:order_id', verifyToken, OrderControllers.GetOrderShortDetails);
+router.get('/:order_id', verifyToken, verifyUserInput.getOrderId, OrderControllers.GetOrderDetails);
+router.get('/shortDetail/:order_id', verifyToken, verifyUserInput.getOrderId, OrderControllers.GetOrderShortDetails);
 
 export default router;

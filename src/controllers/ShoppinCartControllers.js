@@ -1,5 +1,4 @@
 /* eslint-disable import/no-cycle */
-import isEmpty from 'is-empty';
 import ShoppingCartServices from '../services/ShoppingCartServices';
 import helper from '../utils/helper';
 
@@ -40,7 +39,9 @@ export default class ShoppingCartControllers {
       return res.status(201).json(getProduct);
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal Server Error.'
+        error: {
+          message: 'Internal Server Error.'
+        }
       });
     }
   }
@@ -59,11 +60,16 @@ export default class ShoppingCartControllers {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Cart is empty.'
+        error: {
+          code: 'SHO_02',
+          message: 'Cart is empty.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal Server Error.'
+        error: {
+          message: 'Internal Server Error.'
+        }
       });
     }
   }
@@ -83,15 +89,20 @@ export default class ShoppingCartControllers {
         quantity
       };
       const response = await ShoppingCartServices.UpdateCartByItemDetails(item);
-      if (response.length !== 0) {
+      if (response !== undefined) {
         return res.status(200).json([response[0]]);
       }
       return res.status(404).json({
-        error: 'Product not found in cart.'
+        error: {
+          code: 'SHO_02',
+          message: 'Product not found in cart.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: error.message
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -110,11 +121,16 @@ export default class ShoppingCartControllers {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'No product found in cart.'
+        error: {
+          code: 'SHO_02',
+          message: 'No product found in cart.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -132,7 +148,9 @@ export default class ShoppingCartControllers {
       return res.status(200).json();
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -151,11 +169,15 @@ export default class ShoppingCartControllers {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Cart is empty.'
+        error: {
+          message: 'Cart is empty.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -173,7 +195,9 @@ export default class ShoppingCartControllers {
       return res.status(200).json();
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error'
+        error: {
+          message: 'Internal server error'
+        }
       });
     }
   }
@@ -191,7 +215,9 @@ export default class ShoppingCartControllers {
       return res.status(200).json(response);
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error'
+        error: {
+          message: 'Internal server error'
+        }
       });
     }
   }
@@ -209,7 +235,9 @@ export default class ShoppingCartControllers {
       return res.status(200).json();
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error'
+        error: {
+          message: 'Internal server error'
+        }
       });
     }
   }

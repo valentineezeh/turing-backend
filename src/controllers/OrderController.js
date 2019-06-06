@@ -24,12 +24,14 @@ export default class OrderControllers {
         customerId
       };
       const orderId = await OrderServices.CreateOrder(order);
-      return res.status(200).json({
+      return res.status(201).json({
         orderId
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal Server Error.'
+        error: {
+          message: 'Internal Server Error.'
+        }
       });
     }
   }
@@ -47,7 +49,9 @@ export default class OrderControllers {
       return res.status(200).json(response);
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal Server Error.'
+        error: {
+          message: 'Internal Server Error.'
+        }
       });
     }
   }
@@ -66,11 +70,16 @@ export default class OrderControllers {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Order not found.'
+        error: {
+          code: 'ORD_02',
+          message: 'Order not found.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -85,15 +94,20 @@ export default class OrderControllers {
     try {
       const orderId = req.params.order_id;
       const response = await OrderServices.GetOrderShortDetails(orderId);
-      if (response.length !== 0) {
+      if (response !== undefined) {
         return res.status(200).json(response);
       }
       return res.status(404).json({
-        error: 'Order not found.'
+        error: {
+          code: 'ORD_02',
+          message: 'Order not found.'
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }

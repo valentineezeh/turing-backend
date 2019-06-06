@@ -15,7 +15,7 @@ export default class AttributesRepositories {
       const response = await sequelize.query('CALL catalog_get_attributes()', {
         type: sequelize.QueryTypes.SELECT
       });
-      return response;
+      return response[0];
     } catch (error) {
       return error;
     }

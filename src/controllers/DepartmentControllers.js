@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import isEmpty from 'is-empty';
 // eslint-disable-next-line import/no-cycle
 import DepartmentServices from '../services/DepartmentServices';
@@ -19,12 +20,17 @@ export default class DepartmentControllers {
       if (response.length !== 0) {
         return res.status(200).json(response);
       }
-      return res.status(500).json({
-        error: 'Ooops Something went wrong, Please try again.',
+      return res.status(404).json({
+        error: {
+          code: 'DEP_02',
+          message: 'Department not found.',
+        }
       });
     } catch (error) {
       return res.status(500).json({
-        error: 'Internal server error.'
+        error: {
+          message: 'Internal server error.'
+        }
       });
     }
   }
@@ -37,14 +43,16 @@ export default class DepartmentControllers {
      */
   static async GetDepartmentById(req, res) {
     try {
-      const { departmentId } = req.params;
-      // eslint-disable-next-line radix
-      const response = await DepartmentServices.GetDepartmentById(parseInt(departmentId));
+      const { department_id } = req.params;
+      const response = await DepartmentServices.GetDepartmentById(Number(department_id));
       if (!isEmpty(response[0])) {
-        return res.status(200).json({ department_id: departmentId, ...response[0] });
+        return res.status(200).json({ department_id, ...response[0] });
       }
       return res.status(404).json({
-        error: 'Department not found.'
+        error: {
+          code: 'DEP_02',
+          message: 'Department not found.'
+        }
       });
     } catch (error) {
       return res.status(500).json({

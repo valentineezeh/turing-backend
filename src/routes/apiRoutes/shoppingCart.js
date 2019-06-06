@@ -13,7 +13,7 @@ router.delete('/shoppingcart/empty/:cart_id', ShoppingCartControllers.EmptyShopp
 router.get('/shoppingcart/moveToCart/:item_id', ShoppingCartControllers.MoveProductToCart);
 router.get('/shoppingcart/totalAmount/:cart_id', ShoppingCartControllers.GetShoppingCartTotalAmount);
 router.get('/shoppingcart/saveForLater/:item_id', ShoppingCartControllers.SaveProductForLater);
-router.get('/shoppingcart/getSaved/:cart_id', verifyUserInput.getCartId, ShoppingCartControllers.GetSavedProductsInCart);
+router.get('/shoppingcart/getSaved/:cart_id', ShoppingCartControllers.GetSavedProductsInCart);
 router.delete('/shoppingcart/removeProduct/:item_id', verifyUserInput.getItemId, ShoppingCartControllers.RemoveProductInShoppingCart);
 
 export default router;

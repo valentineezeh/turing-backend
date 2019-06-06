@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import supertest from 'supertest';
 import should from 'should';
 import dotenv from 'dotenv';
@@ -19,9 +20,9 @@ describe('Categories Endpoint /categories', () => {
       });
   });
   it('should get a category by category id', (done) => {
-    const categoryId = 1;
+    const category_id = 1;
     app
-      .get(`/api/categories/${categoryId}`)
+      .get(`/api/categories/${category_id}`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(200)
@@ -31,22 +32,22 @@ describe('Categories Endpoint /categories', () => {
       });
   });
   it('should throw an error when category does not exist', (done) => {
-    const categoryId = 10000000;
+    const category_id = 10000000;
     app
-      .get(`/api/categories/${categoryId}`)
+      .get(`/api/categories/${category_id}`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Categories not found.');
+        res.body.error.message.should.equal('Categories not found.');
         done();
       });
   });
   it('should get a category by product id', (done) => {
-    const productId = 1;
+    const product_id = 1;
     app
-      .get(`/api/categories/inProduct/${productId}`)
+      .get(`/api/categories/inProduct/${product_id}`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(200)
@@ -56,22 +57,22 @@ describe('Categories Endpoint /categories', () => {
       });
   });
   it('should throw an error when category of product does not exist', (done) => {
-    const productId = 10000000;
+    const product_id = 10000000;
     app
-      .get(`/api/categories/inProduct/${productId}`)
+      .get(`/api/categories/inProduct/${product_id}`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Product Category not found.');
+        res.body.error.message.should.equal('Product Category not found.');
         done();
       });
   });
   it('should get a category by department id', (done) => {
-    const departmentId = 1;
+    const department_id = 1;
     app
-      .get(`/api/categories/inDepartment/${departmentId}`)
+      .get(`/api/categories/inDepartment/${department_id}`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(200)
@@ -81,15 +82,15 @@ describe('Categories Endpoint /categories', () => {
       });
   });
   it('should throw an error when category in department does not exist', (done) => {
-    const departmentId = 10000000;
+    const department_id = 10000000;
     app
-      .get(`/api/categories/inDepartment/${departmentId}`)
+      .get(`/api/categories/inDepartment/${department_id}`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(404)
       .end((err, res) => {
         res.status.should.equal(404);
-        res.body.error.should.equal('Category not found in department.');
+        res.body.error.message.should.equal('Category not found in department.');
         done();
       });
   });
